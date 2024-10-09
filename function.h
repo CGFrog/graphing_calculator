@@ -55,7 +55,102 @@ private:
 	f(x) = x/((x+2)*(x-2))
 	f(x) = sin(x)/cos(x)
 	f(x) = sin(x^2*4*ln(3x))	
-	f(x) = tan(x^2+6*(ln(x)+7))/(pi*(x^3-5)*(sec(x))), when x = 0 f(x) = tan(48)/-5pi 
+	f(x) = tan(x^2+6*(ln(x)+7))/(pi*(x^3-5)*(sec(x)))
+	*/
+
+	/*
+	CASE 1: f(x) = x
+
+		  =
+		/  \
+	f(x)	x
+	
+	CASE 2: f(x) = x+ln(x)
+
+		=
+	   / \
+	f(x)  + 
+		 / \
+		x  ln
+			|
+			x
+	
+	CASE 3:	f(x) = x^2 + x + 1
+	
+		 =
+		/  \
+	f(x)	+
+		   / \
+		 1    +
+			 /  \
+			x^2  x
+	
+	CASE 4: f(x) = x/((x+2)*(x-2))
+
+		=
+	   / \
+	f(x)   /
+		 /  \
+		x    *
+			/ \		
+		   +   -
+		   /\  /\
+		  x 2  x 2
+
+
+
+	CASE 4: f(x) = sin(x)/cos(x)
+	
+		=
+	  /   \
+	f(x)   /
+		  / \
+	    sin  cos
+		 |    |
+		 x    x
+
+	CASE 5: f(x) = sin(x^2*4*ln(3x))	
+		
+		=
+	 /     \
+	f(x)   sin
+			|
+			*
+		   / \
+		 ln   *
+		 |   / \
+		 *  4   ^
+		/ \    / \
+		3 x   x   2
+		 
+
+
+
+	CASE 6: f(x) = tan(x^2+6*(ln(x)+7))/(pi*(x^3-5)*(sec(x)))
+
+			=
+		/       \
+	  f(x)      tan
+				 |
+				 +
+				/ \
+			   ^   *
+			  / \ / \
+			 x  2 6  /
+			        /    \
+				   + 
+				 /  \	      *
+				            /    \
+				ln    7    *     sec
+				 |        / \     |
+				 x      pi   -    x
+						   /  \
+						  ^    5
+						 / \
+						x	3
+
+
+
 	*/
 
 	};
