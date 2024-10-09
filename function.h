@@ -21,7 +21,7 @@ public:
 
 	//SETTERS
 	void set_user_function(std::string user_function);
-	void set_tolkenized_function(std::vector<std::string>tolkenized_function);
+	void set_tokenized_function(std::vector<std::string>tolkenized_function);
 	float set_previous_calculation();
 	float set_total_calculation();
 	float set_current_calculation();
@@ -46,5 +46,16 @@ private:
 	// All opening parenthesis will be even index '(' = 0,2,4,6,...,n-1 and all clossing parenthesis will be odd index ')' = 1,3,5,...,n
 	// Storing their index number we can find that the parenthesis with the smallest distances to each other will be done first.
 	std::vector <int> parenthesis_index; 
+
+	/*
+	TEST CASES : (BE CAREFUL FOR DIVISION BY 0)
+	f(x) = x
+	f(x) = x+ln(x)
+	f(x) = x^2 + x + 1
+	f(x) = x/((x+2)*(x-2))
+	f(x) = sin(x)/cos(x)
+	f(x) = sin(x^2*4*ln(3x))	
+	f(x) = tan(x^2+6*(ln(x)+7))/(pi*(x^3-5)*(sec(x))), when x = 0 f(x) = tan(48)/-5pi 
+	*/
 
 	};
