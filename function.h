@@ -3,7 +3,7 @@
 #include <cmath>
 #include <vector>
 #include <map>
-
+#include "operation_node.h"
 class function {
 
 public:
@@ -33,7 +33,9 @@ public:
 	//OPERATIONS
 	void initialize_operations(std::map<std::string, int>& operations);
 	float conduct_operation(int hash_index);
-	
+	float traverse_operation_tree(Node* root);
+
+
 private:
 	std::string user_function;
 	std::vector<std::string> tokenized_function;
