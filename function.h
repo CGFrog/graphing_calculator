@@ -56,9 +56,10 @@ private:
 	f(x) = sin(x)/cos(x)
 	f(x) = sin(x^2*4*ln(3x))	
 	f(x) = tan(x^2+6*(ln(x)+7))/(pi*(x^3-5)*(sec(x)))
-	*/
 
-	/*
+
+	ABSTRACT SEARCH TREES 
+
 	CASE 1: f(x) = x
 
 		  =
@@ -148,7 +149,7 @@ private:
 						  ^    5
 						 / \
 						x	3
-
+						
 
 
 	*/
