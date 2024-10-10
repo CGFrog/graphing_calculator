@@ -92,6 +92,11 @@ float function::conduct_operation(int hash_index) {
 		break;
 	}
 
+}	
 
-
+float function::traverse_operation_tree(Node* root) {
+	if (root == nullptr) {
+		return 0;
+	}
+	return 0;
 }
