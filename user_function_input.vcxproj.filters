@@ -18,9 +18,6 @@
     <ClCompile Include="user_function_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="function.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="operation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
