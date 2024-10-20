@@ -1,14 +1,12 @@
-#include <string>
-#include <cmath>
+#include "operation_node.h"
 #include <iostream>
-#include <vector>
 
-int main()
-{
-
-	// User is prompted to input a function
-	// User inputs valid function
-	// Function is then tokenized and organized into a tree structure
-	// Starting from the bottom of the tree 
+int main() {
+	std::string function;
+	function = "x*2+(x+2)";
+	Node* Tree = new Node(function);
+	std::cout << Tree->evaluate_function(0) << std::endl;
+	// Use smart pointers or write a function to delete all pointers as this will only delete the root.
+	delete Tree;
 	return 0;
 }

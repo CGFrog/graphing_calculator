@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-
+#include <iostream>
 struct Node {
 	enum symbol {
 		add, subtract, // Primary
@@ -39,14 +39,19 @@ struct Node {
 	bool is_tertiary(char);
 	std::string zero_out_front(std::string);
 	void create_node(std::string);
-	float find_value(std::string );
+	float find_value(std::string, symbol& );
 	symbol find_symbol(std::string, bool&);
+	std::string remove_parenthesis(std::string func);
+	float evaluate_function(float);
+
+
+
 
 protected:
 	std::string func_l;
 	std::string func_r;
 	int index;
-	float value;
+	float value = 1;
 	symbol symb;
 	Node* Left = nullptr;
 	Node* Right = nullptr;

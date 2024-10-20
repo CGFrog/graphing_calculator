@@ -2,6 +2,7 @@
 
 Node::Node(std::string function) {
 	create_node(function);
+
 }
 
 //SETTERS
@@ -20,7 +21,7 @@ void Node::set_right(Node* right) {
 void Node::set_function_left(std::string func_l) {
 	this->func_l = func_l;
 }
-void Node::set_function_left(std::string func_r) {
+void Node::set_function_right(std::string func_r) {
 	this->func_r = func_r;
 }
 void Node::set_singular(bool singular) {
@@ -49,9 +50,6 @@ std::string Node::get_function_right() {
 bool Node::get_singular() {
 	return singular;
 }
-
-
-
 
 bool Node::is_primary(char index) {
 	if (index == '+' || index == '-') {
@@ -105,70 +103,90 @@ std::string Node::zero_out_front(std::string func) {
 	if (func[0] = '-') {
 		new_func = "0" + func;
 	}
-	else {
-		new_func = "0+" + func;
-	}
 	return new_func;
 }
 
 Node::symbol Node::find_symbol(std::string symb_str, bool& singular) {
 	//Change this to a map if time permits.
-	if (symb_str == "+")
+	std::string symb_str_2 = symb_str.substr(0, 2);
+	std::string symb_str_3 = symb_str.substr(0, 3);
+	std::string symb_str_4 = symb_str.substr(0, 4);
+	std::cout << symb_str << " this is what is being entered" << std::endl;
+	if (symb_str[0] == '+')
 		return add;
-	if (symb_str == "-")
+	if (symb_str[0] == '-')
 		return subtract;
-	if (symb_str == "*")
+	if (symb_str[0] == '*')
 		return multiply;
-	if (symb_str == "/")
+	if (symb_str[0] == '/')
 		return divide;
-	if (symb_str == "^")
+	if (symb_str[0] == '^')
 		return exponent;
 	singular = true;
-	if (symb_str == "log")
+	if (symb_str_3 == "log")
 		return log;
-	if (symb_str == "ln")
+	if (symb_str_2 == "ln")
 		return ln;
-	if (symb_str == "sin")
+	if (symb_str_3 == "sin") {
 		return sin;
-	if (symb_str == "cos")
+	}
+
+	if (symb_str_3 == "cos")
 		return cos;
-	if (symb_str == "tan")
+	if (symb_str_3 == "tan")
 		return tan;
-	if (symb_str == "sec")
+	if (symb_str_3 == "sec")
 		return sec;
-	if (symb_str == "csc")
+	if (symb_str_3 == "csc")
 		return csc;
-	if (symb_str == "cot")
+	if (symb_str_3 == "cot")
 		return cot;
-	if (symb_str == "sqrt")
+	if (symb_str_4 == "sqrt")
 		return sqrt;
+
+	std::cout << symb_str;
 	return val;
+}
+
+float Node::find_value(std::string func,symbol& value_symb) {
+	value_symb = val;
+		if (func == "x") {
+			value_symb = var;
+			return 1;
+		}
+		if (func == "pi")
+			return 3.14159265;
+		if (func == "e")
+			return 2.71828;
+		return stod(func);
+}
+
+std::string Node::remove_parenthesis(std::string func) {
+	if (func[0] == '(' && func[func.length() - 1] == ')'){
+		return func.substr(1, func.length() - 2);
+	}
+	return func;
 }
 
 void Node::create_node(std::string func) {
 	if (!func.length()) {
 		return;
 	}
+	func = remove_parenthesis(func);
 	int operator_index = parse_function_for_primary_operators(func);
-	
-	//-1 Indicates no operators were found, thus it must be a value.
 	if (operator_index == -1) {
-		this->set_symb(val);
-		this->set_value(find_value(func));
-		return;
-	}
-	//-2 indicates a variable
-	if (operator_index == -2) {
-		this->set_symb(var);
+		symbol value_symb;
+		set_value(find_value(func, value_symb));
+		set_symb(value_symb);
 		return;
 	}
 	//Greater than 0 Indicates a function is still parsable.
 
 	std::string func_l = func.substr(0, operator_index);
-	std::string func_r = func.substr(operator_index, func.length() - 1);
+	std::string func_r = func.substr(operator_index+1, func.length() - 1);
 	//Must send in exact substr
 	bool is_singular = false;
-	Node::symbol operator_symbol = find_symbol(func, is_singular);
+	Node::symbol operator_symbol = find_symbol(func.substr(operator_index, func.length()-1), is_singular);
 	this->set_singular(is_singular);
 	this->set_symb(operator_symbol);
 	this->set_function_left(func_l); // These might be redundant and useless but keep them for now in case, delete when working
@@ -180,9 +198,9 @@ void Node::create_node(std::string func) {
 int Node::parse_function_for_primary_operators(std::string func) {
 	int open_par = 0;
 	int closed_par = 0;
-	int first_secondary = 0;
-	int first_tertiary = 0;
-	int first_singular = 0;
+	int first_secondary = -2;
+	int first_tertiary = -2;
+	int first_singular = -2;
 	for (int i = 0; i < func.length(); i++) {
 		if ((func[i] > '0' && func[i] < '9') || func[i] == 'x' || func[i] == 'e' || func[i] == '.') {
 			continue;
@@ -199,25 +217,56 @@ int Node::parse_function_for_primary_operators(std::string func) {
 		else if (is_primary(func[i])) {
 			return i;
 		}
-		else if (is_secondary(func[i]) && first_secondary == 0) {
+		else if (is_secondary(func[i]) && first_secondary == -2) {
 			first_secondary = i;
 		}
-		else if (is_tertiary(func[i]) && first_tertiary == 0) {
+		else if (is_tertiary(func[i]) && first_tertiary == -2) {
 			first_tertiary = i;
 		}
-		else if (is_singular(func.substr(i,4)) && first_singular == 0) {
+		else if (is_singular(func.substr(i,4)) && first_singular == -2) {
 			first_singular = i;
 			//We will need to skip the following letters if it turns out it is a singular function
 		}
 	}
-	if (first_secondary != 0) {
+	if (first_secondary != -2) {
 		return first_secondary;
 	}
-	else if (first_tertiary != 0) {
+	else if (first_tertiary != -2) {
 		return first_tertiary;
 	}
-	else if (first_singular != 0) {
+	else if (first_singular != -2) {
 		return first_singular;
 	}
 	return -1;
+}
+
+float match_operators(float num_l,float num_r, Node::symbol symb) {
+	switch (symb){
+		case Node::add:
+			return num_l + num_r;
+		case Node::subtract:
+			return num_l - num_r;
+		case Node::multiply:
+			return num_l* num_r;
+		case Node::divide:
+			//Lets find a way to just ignore attempts when we are dividing by zero entirely
+			if (num_r == 0)
+				num_r = .0000000001;
+			return  num_l / num_r;
+		case Node::exponent:
+			return pow(num_l, num_r);
+
+	}
+	return 1;
+}
+
+float Node::evaluate_function(float x) {
+	if (get_symbol() == val) {
+		std::cout << get_value() << "val" << std::endl;
+		return get_value();
+	}
+	if (get_symbol() == var) {
+		return x;
+	}
+	return match_operators(get_left()->evaluate_function(x), get_right()->evaluate_function(x), get_symbol());
 }

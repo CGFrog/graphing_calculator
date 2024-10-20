@@ -23,9 +23,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="function.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="operation_node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
