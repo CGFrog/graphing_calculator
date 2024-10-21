@@ -2,7 +2,6 @@
 
 Node::Node(std::string function) {
 	create_node(function);
-
 }
 
 //SETTERS
@@ -111,7 +110,6 @@ Node::symbol Node::find_symbol(std::string symb_str, bool& singular) {
 	std::string symb_str_2 = symb_str.substr(0, 2);
 	std::string symb_str_3 = symb_str.substr(0, 3);
 	std::string symb_str_4 = symb_str.substr(0, 4);
-	std::cout << symb_str << " this is what is being entered" << std::endl;
 	if (symb_str[0] == '+')
 		return add;
 	if (symb_str[0] == '-')
@@ -130,7 +128,6 @@ Node::symbol Node::find_symbol(std::string symb_str, bool& singular) {
 	if (symb_str_3 == "sin") {
 		return sin;
 	}
-
 	if (symb_str_3 == "cos")
 		return cos;
 	if (symb_str_3 == "tan")
@@ -255,14 +252,30 @@ float match_operators(float num_l,float num_r, Node::symbol symb) {
 			return  num_l / num_r;
 		case Node::exponent:
 			return pow(num_l, num_r);
-
+		case Node::log:
+			return log10(num_r);
+		case Node::ln:
+			return log(num_r);
+		case Node::sin:
+			return sin(num_r);
+		case Node::cos:
+			return cos(num_r);
+		case Node::tan:
+			return tan(num_r);
+		case Node::sec:
+			return 1/cos(num_r);
+		case Node::csc:
+			return 1/sin(num_r);
+		case Node::cot:
+			return 1/tan(num_r);
+		case Node::sqrt:
+			return sqrt(num_r);
 	}
 	return 1;
 }
 
 float Node::evaluate_function(float x) {
 	if (get_symbol() == val) {
-		std::cout << get_value() << "val" << std::endl;
 		return get_value();
 	}
 	if (get_symbol() == var) {

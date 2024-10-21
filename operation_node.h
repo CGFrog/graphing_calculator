@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <cmath>
+
 struct Node {
 	enum symbol {
 		add, subtract, // Primary
@@ -48,6 +50,7 @@ struct Node {
 
 
 protected:
+
 	std::string func_l;
 	std::string func_r;
 	int index;
