@@ -74,8 +74,7 @@ bool Node::is_tertiary(char index) {
 bool Node::is_singular(std::string index) {
 	//Ensure the passed string is 4 characters
 	std::string bi_string = index.substr(0, 2);
-	std::string tri_string = index.substr(0, 3);
-	
+	std::string tri_string = index.substr(0, 3);	
 	//Later if time make an array with these strings and adjust the length of the index to match the length
 	//of the comparing string. Im too strapped for time to do this now.
 	if (index[0] == '!')	{
@@ -140,7 +139,6 @@ Node::symbol Node::find_symbol(std::string symb_str, bool& singular) {
 		return cot;
 	if (symb_str_4 == "sqrt")
 		return sqrt;
-
 	std::cout << symb_str;
 	return val;
 }
@@ -178,7 +176,6 @@ void Node::create_node(std::string func) {
 		return;
 	}
 	//Greater than 0 Indicates a function is still parsable.
-
 	std::string func_l = func.substr(0, operator_index);
 	std::string func_r = func.substr(operator_index+1, func.length() - 1);
 	//Must send in exact substr
