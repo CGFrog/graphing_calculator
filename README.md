@@ -19,3 +19,4 @@ MAJOR BUGS
   
 
 STRETCH GOALS
+- Switch if statements to hash tables
