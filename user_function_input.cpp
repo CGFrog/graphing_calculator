@@ -4,13 +4,28 @@
 #include <vector>
 
 int main() {
+    std::cout << "Enter a polynomial." << std::endl;
 	std::string function;
-	function = "e^x";
+    std::getline(std::cin, function);
 	Node* Tree = new Node(function);
-	//Use smart pointers or write a function to delete all pointers as this will only delete the root.	delete Tree;
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Graphing Calculator - Ian Cooper");
+    const int window_size_x = 800;
+    const int window_size_y = 600;
+    sf::RenderWindow window(sf::VideoMode(window_size_x, window_size_y), "Graphing Calculator - Ian Cooper");
+    sf::View view = window.getDefaultView();
+    int start_x = -window_size_x/2;
+    float zoomFactor = 1.5f;  // Adjust zoom level to your needs
+    view.zoom(zoomFactor);
+    window.setView(view);
+    std::vector <float> tree_outputs;
+    for (int i = start_x; i < window_size_x / 2; i++) {
+        tree_outputs.push_back( - Tree->evaluate_function(i));
+    }
 
-    std::vector <sf::CircleShape>;
+    sf::Font font;
+    if (!font.loadFromFile("LEMONMILK-Regular.otf")) {
+        // Handle error
+        return -1;
+    }
 
     while (window.isOpen())
     {
@@ -19,17 +34,41 @@ int main() {
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            if (event.type == sf::Event::MouseWheelScrolled)
+            {
+                if (event.mouseWheelScroll.delta > 0)
+                    view.zoom(0.9f);
+                else if (event.mouseWheelScroll.delta < 0)
+                    view.zoom(1.1f);
+            }
+            window.setView(view);
         }
+
         window.clear();
-        for (int x = -500; x < 500; x++) {
-            sf::CircleShape shape(5.f,5);
+        window.setView(view);
+
+        for (int x = 0; x < tree_outputs.size(); x++)
+        {
+            sf::CircleShape shape(2.f, 5);
             shape.setOrigin(-400, -300);
             shape.setFillColor(sf::Color::Green);
-            shape.setPosition(x*.2, -Tree->evaluate_function(x)*.2);
+            shape.setPosition(x-window_size_x/2, tree_outputs[x]);
             window.draw(shape);
+
+            sf::Text label;
+            label.setFont(font);
+            label.setCharacterSize(12*zoomFactor);
+            label.setFillColor(sf::Color::White);
+            label.setOrigin(-400, -300);
+
+            std::string coordinates = "(" + std::to_string(x-window_size_x/2) + ", " + std::to_string(static_cast<int>(tree_outputs[x])) + ")";
+            label.setString(coordinates);
+            label.setPosition(x - window_size_x / 2 + 5, tree_outputs[x] - 10);
+            window.draw(label);
         }
+
         window.display();
     }
-
-	return 0;
+    delete Tree; //All child nodes are unique ptrs and are deleted automatically.
+    return 0;
 }

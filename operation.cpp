@@ -11,11 +11,12 @@ void Node::set_value(float value) {
 void Node::set_symb(symbol symb) {
 	this->symb = symb;
 }
-void Node::set_left(Node* left) {
-	this->Left = left;
+void Node::set_left(std::unique_ptr<Node> left) {
+	this->Left = std::move(left);
 }
-void Node::set_right(Node* right) {
-	this->Right = right;
+
+void Node::set_right(std::unique_ptr<Node> right) {
+	this->Right = std::move(right);
 }
 void Node::set_function_left(std::string func_l) {
 	this->func_l = func_l;
@@ -28,25 +29,25 @@ void Node::set_singular(bool singular) {
 }
 //GETTERS
 
-float Node::get_value() {
+float Node::get_value() const{
 	return value;
 }
-Node::symbol Node::get_symbol() {
+Node::symbol Node::get_symbol() const{
 	return symb;
 }
-Node* Node::get_left() {
-	return Left;
+Node* Node::get_left() const{
+	return Left.get();
 }
-Node* Node::get_right() {
-	return Right;
+Node* Node::get_right() const{
+	return Right.get();
 }
-std::string Node::get_function_left() {
+std::string Node::get_function_left() const{
 	return func_l;
 }
-std::string Node::get_function_right() {
+std::string Node::get_function_right() const{
 	return func_r;
 }
-bool Node::get_singular() {
+bool Node::get_singular() const{
 	return singular;
 }
 
@@ -71,7 +72,7 @@ bool Node::is_tertiary(char index) {
 	return false;
 }
 
-bool Node::is_singular(std::string index) {
+bool Node::is_singular(const std::string& index) {
 	//Ensure the passed string is 4 characters
 	std::string bi_string = index.substr(0, 2);
 	std::string tri_string = index.substr(0, 3);	
@@ -95,10 +96,10 @@ bool Node::is_singular(std::string index) {
 	return false;
 }
 
-std::string Node::zero_out_front(std::string func) {
+std::string Node::zero_out_front(const std::string& func) {
 	std::string new_func;
 	//If function starts with negative number, adds a 0 out front to accomodate.
-	if (func[0] = '-') {
+	if (func[0] == '-') {
 		new_func = "0" + func;
 	}
 	return new_func;
@@ -185,11 +186,11 @@ void Node::create_node(std::string func) {
 	this->set_symb(operator_symbol);
 	this->set_function_left(func_l); // These might be redundant and useless but keep them for now in case, delete when working
 	this->set_function_right(func_r);
-	this->set_left(new Node(func_l));
-	this->set_right(new Node(func_r));
+	this->set_left(std::make_unique <Node>(func_l));
+	this->set_right(std::make_unique <Node>(func_r));
 }
 
-int Node::parse_function_for_primary_operators(std::string func) {
+int Node::parse_function_for_primary_operators(const std::string& func) {
 	int open_par = 0;
 	int closed_par = 0;
 	int first_secondary = -2;
