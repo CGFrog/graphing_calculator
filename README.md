@@ -7,9 +7,15 @@ production level user-experience.
 FINISHED
 - Create Binary Tree based on function entered by the user.
 - Evaluate trees with +-*/^() operators.
+- Graph UI
+- Memory Management
 
 CURRENT TASK
-- Create graph UI with SFML
+- Negative graphs
+- Trigonometric and Logarithmic Functions
+
+MAJOR BUGS
+- When removing parenthesis, (f(x))/(g(x)) = f(x))/(g(x)
+  
 
 STRETCH GOALS
-- Trigonometric functions, logs, and square root.
