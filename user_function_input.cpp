@@ -6,7 +6,7 @@
 
 
 int main() {
-    std::cout << "Enter a polynomial." << std::endl;
+    std::cout << "Enter a function." << std::endl;
 	std::string function;
     std::getline(std::cin, function);
 

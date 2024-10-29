@@ -10,11 +10,14 @@ struct Graph {
 	const float GRID_SPACING = 10.0f;
 	const float ZOOM_FACTOR = .05f;
 	const float POINT_SIZE = 1.f;
+	const float min_zoom = 0.5f;
+	const float max_zoom = 10.0f;
+	const float GRID_SCALING_FACTOR = 5.0f;
 	void plotted_points(Node*);
 
 	void display_grid(sf::RenderWindow&, sf::View&);
 	void render_graph();
-	void set_tree_outputs(std::vector <float>);
+	void set_tree_outputs(const std::vector <float>&);
 	void zoom_zoom(sf::RenderWindow&, sf::View&);
 	void display_points(sf::RenderWindow&);
 private:

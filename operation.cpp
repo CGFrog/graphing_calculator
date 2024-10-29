@@ -2,7 +2,6 @@
 
 Node::Node(std::string function) {
 	create_node(function);
-
 }
 
 //SETTERS
@@ -68,7 +67,6 @@ bool Node::is_tertiary(char index) {
 }
 
 bool Node::is_singular(const std::string& index) {
-	//Ensure the passed string is 4 characters
 	std::string bi_string = index.substr(0, 2);
 	std::string tri_string = index.substr(0, 3);	
 	//Later if time make an array with these strings and adjust the length of the index to match the length
@@ -203,6 +201,7 @@ void Node::create_node(std::string func) {
 	if (!func.length()) {
 		return;
 	}
+	//std::cout << func << std::endl;
 	func = remove_parenthesis(func);
 	func = zero_out_front(func);
 	int operator_index = parse_function_for_primary_operators(func);
@@ -232,17 +231,17 @@ int Node::parse_function_for_primary_operators(const std::string& func) {
 	int first_tertiary = -1;
 	int first_singular = -1;
 
-	for (int i = 0; i < func.length(); ++i) {
+	for (int i = 0; i < func.length(); i++) {
 		char c = func[i];
 		if ((c >= '0' && c <= '9') || c == 'x' || c == 'e' || c == '.') {
 			continue;
 		}
 		if (c == '(') {
-			++closed_par;
+			closed_par++;
 			continue;
 		}
 		if (c == ')') {
-			++open_par;
+			open_par++;
 			continue;
 		}
 		if (closed_par == open_par) {
@@ -257,11 +256,10 @@ int Node::parse_function_for_primary_operators(const std::string& func) {
 			}
 			else if (is_singular(func.substr(i, 4)) && first_singular == -1) {
 				first_singular = i;
-				i += 3;
+				i += 2;
 			}
 		}
 	}
-
 	if (first_secondary != -1) return first_secondary;
 	if (first_tertiary != -1) return first_tertiary;
 	if (first_singular != -1) return first_singular;
