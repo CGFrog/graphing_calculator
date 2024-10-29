@@ -4,8 +4,9 @@ Graph::Graph(const std::string& function) {
     Node* Tree = new Node(function);
     plotted_points(Tree);
     render_graph();
-    std::cout << "Program shutdown correctly. All memory freed.\n";
+
     delete Tree;
+    std::cout << "Program Shutdown. All memory freed.\n";
 }
 
 void Graph::plotted_points(Node* Tree) {
@@ -13,12 +14,11 @@ void Graph::plotted_points(Node* Tree) {
     int end_x = WINDOW_SIZE_X / 2;
     std::vector<float> outputs;
 
-    outputs.reserve((end_x - start_x) * 20);
+    outputs.reserve((end_x - start_x) * 1/INCREMENT_SIZE);
 
-    for (double x = start_x; x < end_x; x += 0.05) {
-        outputs.emplace_back(-Tree->evaluate_function(x));
+    for (double x = start_x; x < end_x; x += INCREMENT_SIZE) {
+        outputs.emplace_back(-Tree->evaluate_function(x)); // Emplace is always preferable to pusb_back as it creates the object in place.
     }
-
     set_tree_outputs(outputs);
 }
 
@@ -72,7 +72,6 @@ void Graph::zoom_zoom(sf::RenderWindow& window, sf::View& view) {
             view.move(offset);
             drag_start_pos = current_pos;
         }
-
         window.setView(view);
     }
 }
@@ -84,7 +83,7 @@ void Graph::display_points(sf::RenderWindow& window) {
 
     for (int i = 0; i < tree_outputs.size(); i++) {
         float posX = (i - midpoint) + (WINDOW_SIZE_X / 2);
-        float posY = tree_outputs[i] + (WINDOW_SIZE_Y / 2);
+        float posY = 20*tree_outputs[i] + (WINDOW_SIZE_Y / 2);
 
         lines[i].position = sf::Vector2f(posX, posY);
         lines[i].color = sf::Color::Green;

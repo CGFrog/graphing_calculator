@@ -53,7 +53,6 @@ struct Node {
 
 protected:
 	std::string function;
-	int index;
 	float value = 1;
 	symbol symb;
 	std::unique_ptr<Node> Left = nullptr;

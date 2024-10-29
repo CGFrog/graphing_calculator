@@ -46,31 +46,21 @@ bool Node::get_singular() const{
 }
 
 bool Node::is_primary(char index) {
-	if (index == '+' || index == '-') {
-		return true;
-	}
-	return false;
+	return index == '+' || index == '-' ? true : false;
 }
 
 bool Node::is_secondary(char index) {
-	if (index == '*' || index == '/') {
-		return true;
-	}
-	return false;
+	return index == '*' || index == '/' ? true : false;
 }
 
 bool Node::is_tertiary(char index) {
-	if (index == '^') {
-		return true;
-	}
-	return false;
+	return index == '^' ? true : false;
 }
 
 bool Node::is_singular(const std::string& index) {
 	std::string bi_string = index.substr(0, 2);
 	std::string tri_string = index.substr(0, 3);	
-	//Later if time make an array with these strings and adjust the length of the index to match the length
-	//of the comparing string. Im too strapped for time to do this now.
+	// Could use map here.
 	if (index[0] == '!')	{
 		return true;
 	}
@@ -93,8 +83,8 @@ std::string Node::zero_out_front(const std::string& func) {
 	//If function starts with negative number, adds a 0 out front to accomodate.
 	if (func[0] == '-') {
 		int parenthesis_insert = parse_function_for_primary_operators(func.substr(1, func.length()-1));
-		std::string new_func = "(0" + func.substr(0, parenthesis_insert-1) + ')' + func.substr(parenthesis_insert-1, func.length()-parenthesis_insert + 1);
-		return new_func;
+		if (parenthesis_insert == -1) return '0' + func;
+		return "(0" + func.substr(0, parenthesis_insert - 1) + ')' + func.substr(parenthesis_insert - 1, func.length() - parenthesis_insert + 1);
 	}
 	return func;
 }
@@ -132,7 +122,6 @@ Node::symbol Node::find_symbol(const std::string& symb_str, bool& singular) {
 }
 
 float Node::find_value(std::string func,symbol& value_symb) {
-
 	value_symb = val;
 		if (func == "x") {
 			value_symb = var;
@@ -201,9 +190,11 @@ void Node::create_node(std::string func) {
 	if (!func.length()) {
 		return;
 	}
-	//std::cout << func << std::endl;
+
 	func = remove_parenthesis(func);
+//	std::cout << func << std::endl;
 	func = zero_out_front(func);
+
 	int operator_index = parse_function_for_primary_operators(func);
 	if (operator_index == -1) {
 		symbol value_symb;
@@ -225,8 +216,7 @@ void Node::create_node(std::string func) {
 }
 
 int Node::parse_function_for_primary_operators(const std::string& func) {
-	int open_par = 0;
-	int closed_par = 0;
+	int balance = 0;
 	int first_secondary = -1;
 	int first_tertiary = -1;
 	int first_singular = -1;
@@ -237,14 +227,14 @@ int Node::parse_function_for_primary_operators(const std::string& func) {
 			continue;
 		}
 		if (c == '(') {
-			closed_par++;
+			balance++;
 			continue;
 		}
 		if (c == ')') {
-			open_par++;
+			balance--;
 			continue;
 		}
-		if (closed_par == open_par) {
+		if (!balance) {
 			if (is_primary(c)) {
 				return i;
 			}
@@ -277,8 +267,7 @@ float match_operators(float num_l, float num_r, Node::symbol symb) {
 	case Node::multiply:
 		return num_l * num_r;
 	case Node::divide:
-		if (num_r == 0) return NaN;
-		return num_l / num_r;
+		return num_r != 0 ? num_l / num_r : NaN;
 	case Node::exponent:
 		return pow(num_l, num_r);
 	case Node::log:

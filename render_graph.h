@@ -13,6 +13,7 @@ struct Graph {
 	const float min_zoom = 0.5f;
 	const float max_zoom = 10.0f;
 	const float GRID_SCALING_FACTOR = 5.0f;
+	const double INCREMENT_SIZE = 0.05;
 	void plotted_points(Node*);
 
 	void display_grid(sf::RenderWindow&, sf::View&);
