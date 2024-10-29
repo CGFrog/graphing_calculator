@@ -134,10 +134,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="operation.cpp" />
+    <ClCompile Include="render_graph.cpp" />
     <ClCompile Include="user_function_input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="operation_node.h" />
+    <ClInclude Include="render_graph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

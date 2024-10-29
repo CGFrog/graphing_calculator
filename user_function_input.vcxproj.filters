@@ -21,9 +21,15 @@
     <ClCompile Include="operation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="render_graph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="operation_node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="render_graph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
