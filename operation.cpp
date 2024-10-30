@@ -137,12 +137,12 @@ float Node::find_value(std::string func,symbol& value_symb) {
 std::string Node::remove_parenthesis(std::string func) {
 	if (func.front() == '(' && func.back() == ')') {
 		int balance = 0;
-		for (int i = 0; i < func.length() - 1; ++i) {
+		for (int i = 0; i < func.length() - 1; i++) {
 			if (func[i] == '(') {
-				++balance;
+				balance++;
 			}
 			else if (func[i] == ')') {
-				--balance;
+				balance--;
 			}
 			if (balance == 0 && i != func.length() - 2) {
 				return func;
