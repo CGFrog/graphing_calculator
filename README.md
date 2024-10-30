@@ -11,6 +11,19 @@ FINISHED
 - Negative graphs
 - Trigonometric and Logarithmic Functions
 
+KEY FILES
+  
+  GRAPH RENDERER
+  render_graph.h
+  render_graph.cpp
+  
+  TREE NODES
+  operation.cpp
+  operation_node.h
+  
+  MAIN
+  user_function_input.cpp
+
 MAJOR BUGS
 -Asymptotes do not display properly. This is a limitation of the point plotting method.
 
