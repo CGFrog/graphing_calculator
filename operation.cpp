@@ -46,15 +46,15 @@ bool Node::get_singular() const{
 }
 
 bool Node::is_primary(char index) {
-	return index == '+' || index == '-' ? true : false;
+	return index == '+' || index == '-';
 }
 
 bool Node::is_secondary(char index) {
-	return index == '*' || index == '/' ? true : false;
+	return index == '*' || index == '/';
 }
 
 bool Node::is_tertiary(char index) {
-	return index == '^' ? true : false;
+	return index == '^';
 }
 
 bool Node::is_singular(const std::string& index) {
