@@ -156,41 +156,39 @@ std::string Node::remove_parenthesis(std::string func) {
 }
 
 int find_length(Node::symbol operator_symbol) {
-	int length = 1;
 	switch (operator_symbol) {
 	case Node::sin:
-		length = 3;
+		return 3;
 		break;
 	case Node::cos:
-		length = 3;
+		return 3;
 		break;
 	case Node::tan:
-		length = 3;
+		return 3;
 		break;
 	case Node::csc:
-		length = 3;
+		return 3;
 		break;
 	case Node::sec:
-		length = 3;
+		return 3;
 		break;
 	case Node::log:
-		length = 3;
+		return 3;
 		break;
 	case Node::ln:
-		length = 2;
+		return 2;
 		break;
 	case Node::sqrt:
-		length = 4;
+		return 4;
 		break;
 	}
-	return length;
+	return 1;
 }
 
 void Node::create_node(std::string func) {
 	if (!func.length()) {
 		return;
 	}
-
 	func = remove_parenthesis(func);
 //	std::cout << func << std::endl;
 	func = zero_out_front(func);
@@ -234,7 +232,7 @@ int Node::parse_function_for_primary_operators(const std::string& func) {
 			balance--;
 			continue;
 		}
-		if (!balance) {
+		if (balance == 0) {
 			if (is_primary(c)) {
 				return i;
 			}
@@ -246,7 +244,7 @@ int Node::parse_function_for_primary_operators(const std::string& func) {
 			}
 			else if (is_singular(func.substr(i, 4)) && first_singular == -1) {
 				first_singular = i;
-				i += 2;
+				i += 1;
 			}
 		}
 	}
