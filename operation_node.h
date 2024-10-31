@@ -7,7 +7,8 @@
 #include <limits>
 #include <unordered_map>
 
-
+// Used a lot of information from this series https://www.youtube.com/watch?v=KiB0vRi2wlc
+// Design idea from https://www.partow.net/programming/exprtk/index.html#design
 struct Node {
 	enum symbol {
 		add, subtract, // Primary

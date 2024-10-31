@@ -1,4 +1,5 @@
 #include "render_graph.h"
+//https://www.sfml-dev.org/tutorials/2.6/
 
 Graph::Graph(const std::string& function) {
     Node* Tree = new Node(function);
@@ -76,7 +77,7 @@ void Graph::zoom_zoom(sf::RenderWindow& window, sf::View& view) {
         window.setView(view);
     }
 }
-
+//https://www.sfml-dev.org/tutorials/2.6/graphics-vertex-array.php
 void Graph::display_points(sf::RenderWindow& window) {
     int midpoint = tree_outputs.size() / 2;
 
@@ -92,7 +93,7 @@ void Graph::display_points(sf::RenderWindow& window) {
 
     window.draw(lines);
 }
-
+//https://www.sfml-dev.org/tutorials/2.6/window-window.php
 void Graph::render_graph() {
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "Graphing Calculator - Ian Cooper");
     sf::View view = window.getDefaultView();
