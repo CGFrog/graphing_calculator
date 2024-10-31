@@ -27,12 +27,13 @@ void Graph::set_tree_outputs(const std::vector <float>& tree_outputs) {
     this->tree_outputs.reserve(tree_outputs.size());
     this->tree_outputs = tree_outputs;
 }
+
+//Used AI for this function.
 void Graph::zoom_zoom(sf::RenderWindow& window, sf::View& view) {
     sf::Event event;
     static bool is_dragging = false;
     static sf::Vector2i drag_start_pos;
     static float zoom_level = 1.0f;
-
 
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
@@ -129,8 +130,7 @@ void Graph::display_grid(sf::RenderWindow& window, sf::View& view) {
     //Draw origin
     sf::CircleShape origin_marker(5);
     origin_marker.setFillColor(sf::Color::Red);
-    origin_marker.setPosition((WINDOW_SIZE_X / 2) - origin_marker.getRadius(),
-        (WINDOW_SIZE_Y / 2) - origin_marker.getRadius());
+    origin_marker.setPosition((WINDOW_SIZE_X / 2) - origin_marker.getRadius(),(WINDOW_SIZE_Y / 2) - origin_marker.getRadius());
     window.draw(origin_marker);
     // Create axis markings
     float axis_marker_radius = 3.0f;
@@ -138,22 +138,18 @@ void Graph::display_grid(sf::RenderWindow& window, sf::View& view) {
     axis_marker.setFillColor(sf::Color::Blue);
 
     for (float x = GRID_SPACING; x <= WINDOW_SIZE_X / 2; x += GRID_SPACING) {
-        axis_marker.setPosition((WINDOW_SIZE_X / 2) + x - axis_marker_radius,
-            (WINDOW_SIZE_Y / 2) - axis_marker_radius);
+        axis_marker.setPosition((WINDOW_SIZE_X / 2) + x - axis_marker_radius,(WINDOW_SIZE_Y / 2) - axis_marker_radius);
         window.draw(axis_marker);
 
-        axis_marker.setPosition((WINDOW_SIZE_X / 2) - x - axis_marker_radius,
-            (WINDOW_SIZE_Y / 2) - axis_marker_radius);
+        axis_marker.setPosition((WINDOW_SIZE_X / 2) - x - axis_marker_radius,(WINDOW_SIZE_Y / 2) - axis_marker_radius);
         window.draw(axis_marker);
     }
 
     for (float y = GRID_SPACING; y <= WINDOW_SIZE_Y / 2; y += GRID_SPACING) {
-        axis_marker.setPosition((WINDOW_SIZE_X / 2) - axis_marker_radius,
-            (WINDOW_SIZE_Y / 2) + y - axis_marker_radius);
+        axis_marker.setPosition((WINDOW_SIZE_X / 2) - axis_marker_radius,(WINDOW_SIZE_Y / 2) + y - axis_marker_radius);
         window.draw(axis_marker);
 
-        axis_marker.setPosition((WINDOW_SIZE_X / 2) - axis_marker_radius,
-            (WINDOW_SIZE_Y / 2) - y - axis_marker_radius);
+        axis_marker.setPosition((WINDOW_SIZE_X / 2) - axis_marker_radius,(WINDOW_SIZE_Y / 2) - y - axis_marker_radius);
         window.draw(axis_marker);
     }
 }

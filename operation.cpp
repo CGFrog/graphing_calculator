@@ -14,7 +14,6 @@ void Node::set_symb(symbol symb) {
 void Node::set_left(std::unique_ptr<Node> left) {
 	this->Left = std::move(left);
 }
-
 void Node::set_right(std::unique_ptr<Node> right) {
 	this->Right = std::move(right);
 }
@@ -154,7 +153,7 @@ std::string Node::remove_parenthesis(std::string func) {
 	}
 	return func;
 }
-
+//Finds length to skip over for non single char functions.
 int find_length(Node::symbol operator_symbol) {
 	switch (operator_symbol) {
 	case Node::sin:
@@ -184,7 +183,7 @@ int find_length(Node::symbol operator_symbol) {
 	}
 	return 1;
 }
-
+//Creates node based on the given function
 void Node::create_node(std::string func) {
 	if (!func.length()) {
 		return;
@@ -212,7 +211,7 @@ void Node::create_node(std::string func) {
 	this->set_left(std::make_unique <Node>(func_l));
 	this->set_right(std::make_unique <Node>(func_r));
 }
-
+//Finds the highest priority operator
 int Node::parse_function_for_primary_operators(const std::string& func) {
 	int balance = 0;
 	int first_secondary = -1;
@@ -291,7 +290,7 @@ float match_operators(float num_l, float num_r, Node::symbol symb) {
 	}
 }
 
-
+//Evaluates function of x
 float Node::evaluate_function(float x) {
 	if (get_symbol() == val) {
 		return get_value();
