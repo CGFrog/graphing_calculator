@@ -106,9 +106,8 @@ Node::symbol Node::find_symbol(const std::string& symb_str, bool& singular) {
 		{"sqrt", sqrt}
 	};
 
-	if (symbol_map.count(symb_str.substr(0, 1))) {
+	if (symbol_map.count(symb_str.substr(0, 1))) 
 		return symbol_map.at(symb_str.substr(0, 1));
-	}
 	singular = true;
 	if (symbol_map.count(symb_str.substr(0, 3)))
 		return symbol_map.at(symb_str.substr(0, 3));
@@ -126,10 +125,8 @@ float Node::find_value(std::string func,symbol& value_symb) {
 			value_symb = var;
 			return 1;
 		}
-		if (func == "pi")
-			return 3.14159265;
-		if (func == "e")
-			return 2.71828;
+		if (func == "pi") return 3.14159265;
+		if (func == "e") return 2.71828;
 		return stod(func);
 }
 
@@ -143,13 +140,9 @@ std::string Node::remove_parenthesis(std::string func) {
 			else if (func[i] == ')') {
 				balance--;
 			}
-			if (balance == 0 && i != func.length() - 2) {
-				return func;
-			}
+			if (balance == 0 && i != func.length() - 2) return func;
 		}
-		if (balance == 1) {
-			return func.substr(1, func.length() - 2);
-		}
+		if (balance == 1) return func.substr(1, func.length() - 2);
 	}
 	return func;
 }
@@ -185,9 +178,7 @@ int find_length(Node::symbol operator_symbol) {
 }
 //Creates node based on the given function
 void Node::create_node(std::string func) {
-	if (!func.length()) {
-		return;
-	}
+	if (!func.length()) return;
 	func = remove_parenthesis(func);
 //	std::cout << func << std::endl;
 	func = zero_out_front(func);
@@ -292,13 +283,8 @@ float match_operators(float num_l, float num_r, Node::symbol symb) {
 
 //Evaluates function of x
 float Node::evaluate_function(float x) {
-	if (get_symbol() == val) {
-		return get_value();
-	}
-	if (get_symbol() == var) {
-		return x;
-	}
-	if (get_singular())
-		return match_operators(0, get_right()->evaluate_function(x), get_symbol());
+	if (get_symbol() == val) return get_value();
+	if (get_symbol() == var) return x;
+	if (get_singular()) return match_operators(0, get_right()->evaluate_function(x), get_symbol());
 	return match_operators(get_left()->evaluate_function(x), get_right()->evaluate_function(x), get_symbol());
 }
