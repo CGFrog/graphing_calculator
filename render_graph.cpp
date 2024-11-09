@@ -18,7 +18,7 @@ void Graph::plotted_points(Node* Tree) {
     outputs.reserve((end_x - start_x) * 1/INCREMENT_SIZE);
 
     for (double x = start_x; x < end_x; x += INCREMENT_SIZE) {
-        outputs.emplace_back(-Tree->evaluate_function(x)); // Emplace is always preferable to pusb_back as it creates the object in place.
+        outputs.emplace_back(-Tree->evaluate_function(x)); // Emplace is always preferable to push_back as it creates the object in place.
     }
     set_tree_outputs(outputs);
 }
